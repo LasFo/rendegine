@@ -1,0 +1,13 @@
+build --repo_env=CXX=clang++
+build --action_env=BAZEL_COMPILER=clang
+build --action_env=CC=clang --action_env=CXX=clang++
+build --linkopt=-fuse-ld=lld
+build --action_env=CXXFLAGS=-stdlib=libc++
+build --action_env=LDFLAGS=-stdlib=libc++
+build --action_env=BAZEL_CXXOPTS=-stdlib=libc++
+build --action_env=BAZEL_LINKLIBS=-l%:libc++.a:-l%:libc++abi.a
+build --action_env=BAZEL_LINKOPTS=-lm:-pthread
+build --define force_libcpp=enabled
+
+
+
