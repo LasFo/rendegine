@@ -26,22 +26,22 @@ const float k180OverPi = 180.0f / kPi;
 // "Wrap" an angle in range -pi...pi by adding the correct multiple
 // of 2 pi.
 
-extern float wrapPi(float theta);
+extern float wrap_pi(float theta);
 
 // "Safe" inverse trig functions
 
-extern float safeAcos(float x);
+extern float safe_acos(float x);
 
 // Convert between degrees and radians
 
-inline float	degToRad(float deg) { return deg * kPiOver180; }
-inline float	radToDeg(float rad) { return rad * k180OverPi; }
+inline float	deg_to_rad(float deg) { return deg * kPiOver180; }
+inline float	rad_to_deg(float rad) { return rad * k180OverPi; }
 
 // Compute the sin and cosine of an angle.  On some platforms, if we know
 // that we need both values, it can be computed faster than computing
 // the two values seperately.
 
-inline void sinCos(float *returnSin, float *returnCos, float theta) {
+inline void sin_cos(float *returnSin, float *returnCos, float theta) {
 
 	// For simplicity, we'll just use the normal trig functions.
 	// Note that on some platforms we may be able to do better
@@ -53,8 +53,8 @@ inline void sinCos(float *returnSin, float *returnCos, float theta) {
 // Convert between "field of view" and "zoom"  See section 15.2.4.
 // The FOV angle is specified in radians.
 
-inline float	fovToZoom(float fov) { return 1.0f / tan(fov * .5f); }
-inline float	zoomToFov(float zoom) { return 2.0f * atan(1.0f / zoom); }
+inline float	fov_to_zoom(float fov) { return 1.0f / tan(fov * .5f); }
+inline float	zoom_to_fov(float zoom) { return 2.0f * atan(1.0f / zoom); }
 
 /////////////////////////////////////////////////////////////////////////////
 #endif // #ifndef __MATHUTIL_H_INCLUDED__
