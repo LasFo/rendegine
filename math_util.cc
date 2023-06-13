@@ -1,5 +1,5 @@
 #include "math_util.h"
-#include "vector.h"
+#include "vector3d.h"
 #include <vector>
 
 const Vector3 kZeroVector(0.0f, 0.0f, 0.0f);
