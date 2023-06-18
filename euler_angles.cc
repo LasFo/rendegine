@@ -5,6 +5,7 @@
 #include "rotation_matrix.h"
 
 const EulerAngles kEulerAnglesIdentity(0.0f, 0.0f, 0.0f);
+
 void EulerAngles::canonize() {
     pitch = wrap_pi(pitch);
 

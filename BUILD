@@ -30,6 +30,7 @@ cc_library(
 cc_test(
     name = "math_util_test",
     srcs = ["math_util_test.cc"],
+    timeout= "short",
     deps = [
         ":math_util",
         "@googletest//:gtest_main"
@@ -39,18 +40,21 @@ cc_test(
 cc_library(
     name = "euler_angles",
     hdrs = ["euler_angles.h"],
-    srcs = ["euler_angles.cc"],
+    srcs = [
+        "euler_angles.cc",
+        "quaternion.h",
+        "matrix_4x3.h",
+        "rotation_matrix.h",
+    ],
     deps = [
         ":math_util",
-        ":quaternion",
-        ":matrix_4x3",
-        ":rotation_matrix",
     ],
 )
 
 cc_test(
     name = "euler_angles_test",
     srcs = ["euler_angles_test.cc"],
+    timeout= "short",
     deps = [
         ":euler_angles",
         ":math_util",
@@ -63,7 +67,27 @@ cc_test(
 
 cc_library(
     name = "quaternion",
-    hdrs = ["quaternion.h"],
+    hdrs = [
+        "quaternion.h",
+    ],
+    srcs = [
+        "quaternion.cc",
+        "euler_angles.h",
+    ],
+    deps = [
+        ":vector3d",
+        ":math_util",
+    ],
+)
+
+cc_test(
+    name = "quaternion_test",
+    srcs = ["quaternion_test.cc"],
+    timeout= "short",
+    deps = [
+        ":quaternion",
+        "@googletest//:gtest_main"
+    ],
 )
 
 cc_library(
