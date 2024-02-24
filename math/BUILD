@@ -98,4 +98,25 @@ cc_library(
 cc_library(
     name = "rotation_matrix",
     hdrs = ["rotation_matrix.h"],
+    srcs = [
+        "rotation_matrix.cc",
+        "euler_angles.h",
+        "math_util.h",
+        "quaternion.h",
+    ],
+    deps = [
+        ":vector3d",
+        ":math_util",
+    ],
+)
+
+cc_test(
+    name = "rotation_matrix_test",
+    srcs = ["rotation_matrix_test.cc"],
+    timeout= "short",
+    deps = [
+        ":quaternion",
+        ":rotation_matrix",
+        "@googletest//:gtest_main"
+    ],
 )

@@ -1,14 +1,15 @@
 #include "rotation_matrix.h"
 #include "euler_angles.h"
 #include "quaternion.h"
+#include "vector3d.h"
 #include "math_util.h"
 
-void RotationMatix::identity() {
+void RotationMatrix::identity() {
     m11 =  m22 =  m33 = 1;
     m12 = m13= m21 = m23 = m31 = m32 = 0;
 }
 
-void RotationMatix::setup(const EulerAngles &orientation) {
+void RotationMatrix::setup(const EulerAngles &orientation) {
     float h = orientation.heading;
     float p = orientation.pitch;
     float b = orientation.bank;
@@ -30,20 +31,6 @@ void RotationMatix::setup(const EulerAngles &orientation) {
     m31 = -sinh*cosb+cosh*sinp*sinb;
     m32 = sinb*sinh+cosh*sinp*cosb;
     m33 = cosh*cosp;
-}
-
-void RotationMatrix::fromInertialToObjectQuaternion(const Quaternion &q) {
-    m11 = 1.f - 2.f*q.y*q.y - 2.f*q.z*q.z;
-    m12 = 2.f*q.x*q.y + 2.f*q.w*q.z;
-    m12 = 2.f*q.x*q.z - 2.f*q.w*q.y;
-
-    m21 = 2.f*q.x*q.y - 2.f*q.w*q.z;
-    m22 = 1.f -2.f*q.x*q.x - 2.f*q.z*q.z;
-    m23 = 2.f*q.y*q.z + 2.f*q.w*q.x;
-
-    m31 = 2.f*q.x*q.z + 2.f*q.w*q.y;
-    m32 = 2.f*q.y*q.z - 2.f*q.w*q.x;
-    m33 = 1.f - 2.f*q.x*q.x - 2.f*q.y*q.y;
 }
 
 void RotationMatrix::fromInertialToObjectQuaternion(const Quaternion &q) {
