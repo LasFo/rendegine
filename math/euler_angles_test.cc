@@ -24,6 +24,12 @@ TEST(euler_angles, canonize){
     EXPECT_NEAR(-kPi, ea.heading, 1.0e-5f);
     EXPECT_NEAR(0.0f, ea.pitch,   1.0e-5f);
     EXPECT_NEAR(0.0f, ea.bank,    1.0e-5f);
+
+    ea = EulerAngles(-kPi,(kPi-0.1f)/2.0f,kPi/2.0f);
+    ea.canonize();
+    EXPECT_NEAR(-kPi, ea.heading, 1.0e-5f);
+    EXPECT_NEAR((kPi-0.1f)/2.0f, ea.pitch,   1.0e-5f);
+    EXPECT_NEAR(kPi/2.0f, ea.bank,    1.0e-5f);
 }
 
 TEST(euler_angles, fromObjectToInertialQuaternion){
@@ -83,4 +89,19 @@ TEST(euler_angles, fromtRotationMatrix){
     EXPECT_NEAR(0.0f, ea.heading, 1.0e-5f);
     EXPECT_NEAR(0.0f, ea.pitch,   1.0e-5f);
     EXPECT_NEAR(0.0f, ea.bank,    1.0e-5f);
+
+    float values[5] = {0.5f, kPi-0.1f, -kPi+0.1f, 1.154f, 0};
+    for(float h : values) for(float p : values) for (float b : values) {
+        EulerAngles ea_in(h, p, b);
+        EulerAngles ea_out;
+        ea_in.canonize();
+        rm.setup(ea_in);
+        ea_out.fromRotationMatrix(rm);
+
+        ea_out.canonize();
+        EXPECT_NEAR(wrap_pi(ea_in.heading+k2Pi), wrap_pi(ea_out.heading+k2Pi), 1.0e-5f);
+        EXPECT_NEAR(wrap_pi(ea_in.pitch+k2Pi), wrap_pi(ea_out.pitch+k2Pi),   1.0e-5f);
+        EXPECT_NEAR(wrap_pi(ea_in.bank+k2Pi), wrap_pi(ea_out.bank+k2Pi),    1.0e-5f);
+    }
 }
+

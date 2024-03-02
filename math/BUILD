@@ -117,6 +117,7 @@ cc_test(
     deps = [
         ":quaternion",
         ":rotation_matrix",
+        ":euler_angles",
         "@googletest//:gtest_main"
     ],
 )
