@@ -62,6 +62,11 @@ public:
 	void	setupParentToLocal(const Vector3 &pos, const RotationMatrix &orient);
 
 	// Setup the matrix to perform a rotation about a cardinal axis
+    //	1 => rotate about the x-axis
+    //	2 => rotate about the y-axis
+    //	3 => rotate about the z-axis
+    // theta is the amount of rotation, in radians.  The left-hand rule is
+    // used to define "positive" rotation.
 
 	void	setupRotate(int axis, float theta);
 
@@ -83,6 +88,9 @@ public:
 	void	setupScaleAlongAxis(const Vector3 &axis, float k);
 
 	// Setup the matrix to perform a shear
+    //	axis == 1  =>  y += s*x, z += t*x
+    //	axis == 2  =>  x += s*y, z += t*y
+    //	axis == 3  =>  x += s*z, y += t*z
 
 	void	setupShear(int axis, float s, float t);
 
@@ -93,6 +101,12 @@ public:
 
 	// Setup the matrix to perform a reflection about a plane parallel
 	// to a cardinal plane
+    //	1 => reflect about the plane x=k
+    //	2 => reflect about the plane y=k
+    //	3 => reflect about the plane z=k
+    //
+    // The translation is set appropriately, since translation must occur if
+    // k != 0
 
 	void	setupReflect(int axis, float k = 0.0f);
 
@@ -112,7 +126,7 @@ Matrix4x3	operator*(const Matrix4x3 &a, const Matrix4x3 &b);
 // Operator *= for conformance to C++ standards
 
 Vector3		&operator*=(Vector3 &p, const Matrix4x3 &m);
-Matrix4x3	&operator*=(const Matrix4x3 &a, const Matrix4x3 &m);
+Matrix4x3	&operator*=(Matrix4x3 &a, const Matrix4x3 &m);
 
 // Compute the determinant of the 3x3 portion of the matrix
 

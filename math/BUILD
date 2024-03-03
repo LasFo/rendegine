@@ -1,20 +1,5 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
 
-#cc_binary(
-#    name = "main",
-#    srcs = ["main.cpp"],
-#    deps = ["@bazel_tools//tools/cpp/runfiles", ":atcoder"],
-#    data = ["t_mons.tbl"],
-#    copts = ["-Xclang", "-Wno-c++17-extensions", "-O2", "-Wno-unqualified-std-cast-call"],
-#    linkopts = ["-Xclang", "-Wl,-export_dynamic", "-g"],
-#    features = [ "fully_static_link" ],
-#)
-
-#cc_library(
-#        name = "atcoder",
-#        hdrs =["bits/stdc++.h"] + glob(["atcoder/*"]),
-#)
-
 cc_library(
     name = "vector3d",
     hdrs = ["vector3d.h"],
@@ -91,17 +76,11 @@ cc_test(
 )
 
 cc_library(
-    name = "matrix_4x3",
-    hdrs = ["matrix_4x3.h"],
-)
-
-cc_library(
     name = "rotation_matrix",
     hdrs = ["rotation_matrix.h"],
     srcs = [
         "rotation_matrix.cc",
         "euler_angles.h",
-        "math_util.h",
         "quaternion.h",
     ],
     deps = [
@@ -118,6 +97,34 @@ cc_test(
         ":quaternion",
         ":rotation_matrix",
         ":euler_angles",
+        "@googletest//:gtest_main"
+    ],
+)
+
+cc_library(
+    name = "matrix_4x3",
+    hdrs = ["matrix_4x3.h"],
+    srcs = [
+        "matrix_4x3.cc",
+        "euler_angles.h",
+        "quaternion.h",
+        "rotation_matrix.h",
+    ],
+    deps = [
+        ":vector3d",
+        ":math_util",
+    ],
+)
+
+cc_test(
+    name = "matrix_4x3_test",
+    srcs = ["matrix_4x3_test.cc"],
+    timeout= "short",
+    deps = [
+        ":quaternion",
+        ":rotation_matrix",
+        ":euler_angles",
+        ":matrix_4x3",
         "@googletest//:gtest_main"
     ],
 )
